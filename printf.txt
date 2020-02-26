@@ -1,0 +1,21 @@
+
+%{
+int pf=0,sf=0;
+%}
+
+%%
+"printf" {fprintf(yyout,"WRITE");pf++;}
+"scanf" {fprintf(yyout,"READ");sf++;}
+%%
+int main(int argc,char *argv[])
+{
+if(argc!=3){exit(0);}
+ yyin=fopen(argv[1],"r");
+  yyout=fopen(argv[2],"w");
+yylex();
+ printf("\nNo. of printf lines=%d\n",pf);
+printf("\nNo. of scanf lines=%d\n",sf);
+
+}
+int yywrap()
+{return 1;}
