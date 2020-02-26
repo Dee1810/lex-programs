@@ -1,0 +1,18 @@
+%{
+int ch=0,b=0,l=0,w=0;
+%}
+%%
+[" "] {b++;w++;}
+[\n] {l++;w++;}
+[\t] {b++;}
+. {ch++;}
+%%
+int yywrap()
+{}
+int main()
+{
+printf("Enter text\n");
+yylex();
+printf("No of characters is %d\nNo of blanks is %d\nNo of words is %d\nNo of lines is %d\n",ch,b,w,l);
+return 0;
+}
