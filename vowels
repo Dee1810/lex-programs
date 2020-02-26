@@ -1,0 +1,18 @@
+
+%{
+int vowel=0,cons=0;
+%}
+%%
+[aeiouAEIOU] { vowel++; }
+[A-Za-z] { cons++; }
+%%
+int yywrap()
+{}
+int main()
+{
+printf("Enter string\n");
+yylex();
+printf("No of vowels is %d\n",vowel);
+printf("No of consonants is %d\n",cons);
+return 0;
+}
