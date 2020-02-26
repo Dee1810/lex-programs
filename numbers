@@ -1,0 +1,36 @@
+%{
+int pos=0,neg=0;
+%}
+%%
+[-][0-9]+ {neg++;}
+\+?[0-9]+ {pos++;}
+%%
+int yywrap(){}
+int main()
+{
+printf("Enter numbers\n");
+yylex();
+printf("No of positive integers is %d\nNo of negative integers is %d\n",pos,neg);
+return 0;
+}
+
+4
+
+%{
+int pf=0,nf=0;
+%}
+DIGIT [0-9]
+%%
+\+?{DIGIT}*\.{DIGIT}+ pf++;
+-{DIGIT}*\.{DIGIT}+ nf++;
+%%
+int yywrap()
+{}
+int main()
+{
+printf("Enter numbers\n");
+yylex();
+printf("No of positive fractions is %d\nNo of negative fractions is %d\n",pf,nf);
+return 0;
+}
+
