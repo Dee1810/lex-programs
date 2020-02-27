@@ -1,0 +1,228 @@
+filter_none
+brightness_4
+/* LEX code to replace a word with another  
+   taking input from file */
+    
+/* Definition section */
+/* character array line can be   
+   accessed inside rule section and main() */
+  
+%{ 
+#include<stdio.h> 
+#include<string.h> 
+char line[100]; 
+  
+%} 
+  
+/* Rule Section */
+/* Rule 1 writes the string stored in line  
+   character array to file output.txt */
+/* Rule 2 copies the matched token 
+   i.e every character except newline character 
+    to line character array  */
+  
+%% 
+['\n']    { fprintf(yyout,"%s\n",line);} 
+(.*)      { strcpy(line,yytext); } 
+%% 
+  
+  
+int yywrap() 
+{ 
+    return 1; 
+} 
+  
+/* code section */
+int main() 
+{ 
+        extern FILE *yyin, *yyout; 
+        /* open the source file  
+           in read mode */
+    yyin=fopen("input.txt","r"); 
+  
+          
+        /* open the output file  
+           in write mode */
+    yyout=fopen("output.txt","w"); 
+    yylex(); 
+} 
+
+/* Lex program to search a word in a file */
+  
+%{ 
+ /* Definition section */
+#include<string.h> 
+void check(char *); 
+%} 
+  
+/* Rule Section */
+%% 
+[a-zA-Z]+ check(yytext); 
+%% 
+  
+// driver code 
+int main() 
+{ 
+    // The function that starts the analysis  
+    yylex(); 
+    return 0; 
+} 
+void check(char *str) 
+{ 
+      /* fp as pointer  
+    of File type */
+    FILE *fp; 
+    char temp[30]; 
+     
+       
+    /* fp points to the file input.txt  
+    and opens it in read mode */
+    fp=fopen("input.txt", "r"); 
+    while((fscanf(fp, "%s", temp))!=EOF) 
+    { 
+        if(!(strcmp(temp, str))) 
+        { 
+            printf("FOUND\n"); 
+            return; 
+        } 
+         
+    } 
+    printf("NOT FOUND\n"); 
+        return; 
+      
+      }
+      
+     / * Program to add line numbers 
+ to a given file*/
+%{ 
+int line_number = 1;  // initializing line number to 1 
+%} 
+  
+/* simple name definitions to simplify 
+the scanner specification name  
+definition of line*/
+line .*\n     
+  
+%% 
+{line} { printf("%10d %s", line_number++, yytext); }  
+  
+ /* whenever a line is encountered increment count*/
+  
+ /* 10 specifies the padding from left side to  
+                    present the line numbers*/
+   
+ /* yytext The text of the matched pattern is stored 
+                           in this variable (char*)*/
+%% 
+  
+int yywrap(){}  
+  
+int main(int argc, char*argv[]) 
+{ 
+extern FILE *yyin;    // yyin as pointer of File type 
+  
+yyin = fopen("testtest.c","r");  /* yyin points to the file  
+                                   testtest.c and opens it 
+                                   in read mode.*/
+  
+yylex();   // The function that starts the analysis. 
+  
+return 0; 
+} 
+
+
+/*lex code to accept a  valid email */ 
+% 
+{ 
+  int flag = 0; % 
+} % 
+% [a - z.0 - 9 _] + @[a - z] + ".com" | ".in"
+flag = 1; % 
+% 
+main() { 
+  yylex(); 
+  if (flag == 1) 
+    printf("Accepted"); 
+  else
+    printf("Not Accepted"); 
+} 
+
+
+/* Lex Program to check valid Mobile Number */
+  
+%{ 
+    /* Definition section */
+%} 
+  
+/* Rule Section */
+%% 
+  
+[1-9][0-9]{9} {printf("\nMobile Number Valid\n");} 
+  
+.+ {printf("\nMobile Number Invalid\n");} 
+  
+%% 
+  
+// driver code  
+int main()  
+{ 
+    printf("\nEnter Mobile Number : "); 
+    yylex(); 
+    printf("\n"); 
+    return 0; 
+} 
+
+%% 
+((http)|(ftp))s?:\/\/[a-zA-Z0-9]{2, }(\.[a-z]{2, }) 
+       +(\/[a-zA-Z0-9+=?]*)* {printf("\nURL Valid\n");} 
+  
+.+ {printf("\nURL Invalid\n");} 
+  
+%% 
+  
+   
+// driver program 
+void main()  
+ { 
+    printf("\nEnter URL : "); 
+    yylex(); 
+    printf("\n"); 
+ } 
+ 
+ /*Lex program to take input from file and  
+remove multiple spaces, newline and tab 
+and write output in a separate file*/
+  
+% { 
+    /*Definition section */
+    % 
+} 
+  
+/* Rule: whenever space, tab or  
+newline is encounterd, remove it*/
+% % 
+[ \n\t]+ {fprintf(yyout, "");} 
+.       { fprintf(yyout, "%s", yytext); } 
+% % 
+  
+int yywrap(){} 
+  
+// driver code  
+int main() 
+{ 
+  
+    /* yyin and yyout as pointer 
+    of File type */
+    extern FILE *yyin, *yyout; 
+  
+    /* yyin points to the file input.txt 
+    and opens it in read mode*/
+    yyin = fopen("Input.txt", "r"); 
+  
+    /* yyout points to the file output.txt 
+    and opens it in write mode*/
+    yyout = fopen("Output.txt", "w"); 
+  
+    yylex(); 
+    return 0; 
+}
